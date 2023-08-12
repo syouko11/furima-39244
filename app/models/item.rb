@@ -13,4 +13,26 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :shopping_date
 
+  # ジャンルの選択が「---」の時は保存できないようにする
+  with_options numericality: { other_than: 0 } do
+    validates :category_id
+    validates :sales_status_id
+    validates :shopping_cost_id
+    validates :prefecture_id
+    validates :shopping_date_id
+  end
+
+  # 空では保存できない
+  with_options presence: true do
+    validates :image
+    validates :name
+    validates :introduction
+    validates :category_id
+    validates :sales_status_id
+    validates :shopping_cost_id
+    validates :prefecture_id
+    validates :shopping_date_id
+    validates :price
+    validates :user_id
+  end
 end
