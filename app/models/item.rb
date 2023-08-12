@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  
+
   belongs_to :user
 
   # ActiveStorageのアソシエーション
@@ -8,5 +8,6 @@ class Item < ApplicationRecord
 
   # ActiveHashのアソシエーション
   belongs_to :category
+  belongs_to :sales_status
 
 end
