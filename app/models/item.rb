@@ -10,5 +10,6 @@ class Item < ApplicationRecord
   belongs_to :category
   belongs_to :sales_status
   belongs_to :shopping_cost
+  belongs_to :prefecture
 
 end
