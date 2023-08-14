@@ -7,7 +7,7 @@ FactoryBot.define do
     shopping_cost_id { Faker::Number.within(range: 1..2) }
     prefecture_id { Faker::Number.within(range: 1..47) }
     shopping_date_id { Faker::Number.within(range: 1..3) }
-    # price {}
+    price {Faker::Number.within(range: 300..9999999)}
     
     association :user
 

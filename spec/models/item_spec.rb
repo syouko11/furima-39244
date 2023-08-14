@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.build(:item)
+    user = FactoryBot.create(:user)
+    @item = FactoryBot.build(:item, user: user)
   end
 
   describe '商品出品登録' do
     context '登録できる場合' do
-      it 'すべての入力項目が存在すれば登録できる' do # price未実装の時点でここにエラーが発生している
+      it 'すべての入力項目が存在すれば登録できる' do 
         expect(@item).to be_valid
       end
     end
@@ -81,6 +82,26 @@ RSpec.describe Item, type: :model do
         @item.shopping_date_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Shopping date must be other than 0")
+      end
+      it '価格が空では登録できない' do
+        @item.price = ''
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price can't be blank", "Price is not a number")
+      end
+      it '価格が300円以下では登録できない' do
+        @item.price = 100
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+      end
+      it '価格が9,999,999円以上では登録できない' do
+        @item.price = 10000000
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
+      it '価格が半角数値ではないと登録できない' do
+        @item.price = '５０００'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
       end
     end
   end 
