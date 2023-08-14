@@ -24,6 +24,7 @@ class Item < ApplicationRecord
 
   # 空では保存できない
   with_options presence: true do
+    validates :user_id
     validates :image
     validates :name
     validates :introduction
@@ -32,7 +33,7 @@ class Item < ApplicationRecord
     validates :shopping_cost_id
     validates :prefecture_id
     validates :shopping_date_id
-    validates :price
-    validates :user_id
+    # 価格が300~9,999,999円であること。半角数値のみであること。
+    validates :price, numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, only_integer: true, format: {with: /\A\d+\z/}}
   end
 end
