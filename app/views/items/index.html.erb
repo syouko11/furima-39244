@@ -136,9 +136,11 @@
           <%= image_tag item.image, class: "item-img" if item.image.attached? %>
 
           <%# 商品が売れていればsold outを表示しましょう %>
+          <%# if item.present? この記述で表示できるか現時点では不明、購入機能実装時にコメントアウトを外す。 %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
+          <%# end %>
           <%# //商品が売れていればsold outを表示しましょう %>
 
         </div>
