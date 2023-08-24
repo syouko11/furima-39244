@@ -25,6 +25,13 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    # ログイン状態かつ出品者であれば編集ページへ
+    if @item.user_id == current_user.id
+      render :edit
+    else
+    # ログイン状態でも出品者でない場合はトップページへ
+      redirect_to root_path
+    end
   end
 
   def update
