@@ -27,6 +27,17 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      # 編集が完了したら詳細ページへ
+      redirect_to item_path
+    else
+      # 編集に問題がある状態では編集ページへ
+      render :edit
+    end
+  end
+
   private
 
   def item_params
