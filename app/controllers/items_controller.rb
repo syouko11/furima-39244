@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   # ログアウト状態のユーザーをログインページへリダイレクト
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -20,11 +21,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
     # ログイン状態かつ出品者であれば編集ページへ
     if @item.user_id == current_user.id
       render :edit
@@ -35,7 +34,6 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       # 編集が完了したら詳細ページへ
       redirect_to item_path
@@ -49,5 +47,9 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:image, :name, :introduction, :category_id, :sales_status_id, :shopping_cost_id, :prefecture_id, :shopping_date_id, :price).merge(user_id: current_user.id)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 end
