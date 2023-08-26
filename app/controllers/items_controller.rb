@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
-    @items = Item.includes(:user).order("created_at DESC")
+    @items = Item.includes(:user).order('created_at DESC')
   end
 
   def new
@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
     if @item.user_id == current_user.id
       render :edit
     else
-    # ログイン状態でも出品者でない場合はトップページへ
+      # ログイン状態でも出品者でない場合はトップページへ
       redirect_to root_path
     end
   end
@@ -45,16 +45,17 @@ class ItemsController < ApplicationController
 
   def destroy
     # ログイン状態かつ出品者であれば商品を削除し、トップページへ
-    if @item.user_id == current_user.id
-      @item.destroy
-      redirect_to root_path
-    end
+    return unless @item.user_id == current_user.id
+
+    @item.destroy
+    redirect_to root_path
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:image, :name, :introduction, :category_id, :sales_status_id, :shopping_cost_id, :prefecture_id, :shopping_date_id, :price).merge(user_id: current_user.id)
+    params.require(:item).permit(:image, :name, :introduction, :category_id, :sales_status_id, :shopping_cost_id, :prefecture_id,
+                                 :shopping_date_id, :price).merge(user_id: current_user.id)
   end
 
   def set_item

@@ -33,6 +33,6 @@ class Item < ApplicationRecord
     validates :prefecture_id
     validates :shopping_date_id
     # 価格が300~9,999,999円であること。
-    validates :price, numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, only_integer: true}
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, only_integer: true }
   end
 end
