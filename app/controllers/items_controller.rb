@@ -45,10 +45,9 @@ class ItemsController < ApplicationController
 
   def destroy
     # ログイン状態かつ出品者であれば商品を削除し、トップページへ
+    # 出品者でない場合は削除せず、トップページへ
     if @item.user_id == current_user.id
       @item.destroy
-    else
-      # 出品者でない場合は削除せず、トップページへ
     end
     redirect_to root_path
   end
