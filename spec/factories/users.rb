@@ -3,7 +3,7 @@ FactoryBot.define do
     nickname { Faker::Name.name }
     email { Faker::Internet.free_email }
     # 英数字を含ませるため'2b'+ を追記。
-    password { '2b' + Faker::Internet.password(min_length: 6) }
+    password { "2b#{Faker::Internet.password(min_length: 6)}" }
     password_confirmation { password }
     last_name { Gimei.last.kanji }
     first_name { Gimei.first.kanji }

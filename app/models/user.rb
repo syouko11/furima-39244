@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :items
-  
+
   with_options presence: true do
     # ニックネームが必須であること。
     validates :nickname
@@ -22,8 +22,7 @@ class User < ApplicationRecord
     validates :birth_date
   end
 
-   # パスワードが半角英数字混合での入力必須であること。
-   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
-   validates_format_of :password, with: PASSWORD_REGEX, message: 'is invalid. Include both letters and numbers'
-
+  # パスワードが半角英数字混合での入力必須であること。
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
+  validates_format_of :password, with: PASSWORD_REGEX, message: 'is invalid. Include both letters and numbers'
 end
