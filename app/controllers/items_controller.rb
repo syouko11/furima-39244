@@ -47,11 +47,10 @@ class ItemsController < ApplicationController
     # ログイン状態かつ出品者であれば商品を削除し、トップページへ
     if @item.user_id == current_user.id
       @item.destroy
-      redirect_to root_path
     else
       # 出品者でない場合は削除せず、トップページへ
-      redirect_to root_path
     end
+    redirect_to root_path
   end
 
   private
