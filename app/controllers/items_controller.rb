@@ -48,8 +48,10 @@ class ItemsController < ApplicationController
     # 出品者でない場合は削除せず、トップページへ
     if @item.user_id == current_user.id
       @item.destroy
+      redirect_to root_path
+    else
+      render :index
     end
-    redirect_to root_path
   end
 
   private
