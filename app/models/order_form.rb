@@ -1,7 +1,7 @@
 class OrderForm
   include ActiveModel::Model
   # ordersテーブルとdestinationsテーブルに保存したいカラム名を指定
-  attr_accessor :postal_code, :prefecture_id, :city, :address, :building, :phone_number, :user_id, :item_id
+  attr_accessor :postal_code, :prefecture_id, :city, :address, :building, :phone_number, :user_id, :item_id, :token
 
   with_options presence: true do
 
@@ -14,6 +14,9 @@ class OrderForm
     # 建物名(building)は任意
     # 電話番号は、10桁以上11桁以内の半角数値のみ保存可能
     validates :phone_number, format: {with: /\A[0-9]{10,11}\z/}
+
+    # トークンのバリデーション
+    validates :token
   end
 
   def save
