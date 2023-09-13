@@ -1,15 +1,18 @@
 class OrdersController < ApplicationController
   # ログアウト状態で商品購入ページに遷移しようとするユーザーをログインページに遷移
   before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
 
   def index
-    # 商品の情報を受け取る
-    @item = Item.find(params[:item_id])
-    @order_form = OrderForm.new
+    # ユーザーが出品者であるか、または商品が売却済みであればトップページへ
+    if @item.user_id == current_user.id || @item.order.present?
+      redirect_to root_path
+    else
+      @order_form = OrderForm.new
+    end
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
     if @order_form.valid?
       pay_item
@@ -21,6 +24,11 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def set_item
+    # 商品の情報を受け取る
+    @item = Item.find(params[:item_id])
+  end
 
   def order_params
     params.require(:order_form).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
