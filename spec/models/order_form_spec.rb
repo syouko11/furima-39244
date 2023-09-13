@@ -21,7 +21,7 @@ RSpec.describe OrderForm, type: :model do
       it '郵便番号が「3桁ハイフン4桁」の半角文字列でないと保存できない' do
         @order_form.postal_code = '1234567'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Postal code is invalid")
+        expect(@order_form.errors.full_messages).to include('Postal code is invalid')
       end
       it '都道府県が空では保存できない' do
         @order_form.prefecture_id = ''
@@ -31,7 +31,7 @@ RSpec.describe OrderForm, type: :model do
       it '都道府県が「---」では保存できない' do
         @order_form.prefecture_id = 0
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Prefecture must be other than 0")
+        expect(@order_form.errors.full_messages).to include('Prefecture must be other than 0')
       end
       it '市区町村が空では保存できない' do
         @order_form.city = ''
@@ -51,7 +51,7 @@ RSpec.describe OrderForm, type: :model do
       it '電話番号が10桁以上11桁以内の半角数値でないと保存できない' do
         @order_form.phone_number = '090-1234-5678'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number is invalid")
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid')
       end
       it 'tokenが空では保存できない' do
         @order_form.token = ''
@@ -59,5 +59,5 @@ RSpec.describe OrderForm, type: :model do
         expect(@order_form.errors.full_messages).to include("Token can't be blank")
       end
     end
-  end 
+  end
 end
