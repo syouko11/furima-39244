@@ -24,8 +24,8 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    # ログイン状態かつ出品者であれば編集ページへ
-    if @item.user_id == current_user.id
+    # ログイン状態かつ出品者かつ商品が存在していれば編集ページへ
+    if @item.user_id == current_user.id && @item.order.nil?
       render :edit
     else
       # ログイン状態でも出品者でない場合はトップページへ
@@ -48,8 +48,10 @@ class ItemsController < ApplicationController
     # 出品者でない場合は削除せず、トップページへ
     if @item.user_id == current_user.id
       @item.destroy
+      redirect_to root_path
+    else
+      render :index
     end
-    redirect_to root_path
   end
 
   private
