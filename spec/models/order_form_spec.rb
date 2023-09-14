@@ -48,7 +48,17 @@ RSpec.describe OrderForm, type: :model do
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Phone number can't be blank")
       end
-      it '電話番号が10桁以上11桁以内の半角数値でないと保存できない' do
+      it '電話番号が9桁以下では保存できない' do
+        @order_form.phone_number = '09012345'
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号が12桁以上では保存できない' do
+        @order_form.phone_number = '090123456789'
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号に半角数字以外が含まれている場合は保存できない' do
         @order_form.phone_number = '090-1234-5678'
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include('Phone number is invalid')
@@ -57,6 +67,16 @@ RSpec.describe OrderForm, type: :model do
         @order_form.token = ''
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'userが紐づいていなければ保存できない' do
+        @order_form.user_id = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐づいていなければ保存できない' do
+        @order_form.item_id = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
